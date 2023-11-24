@@ -76,6 +76,7 @@ series = autocorrelation(time, 10) + seasonality(time, peroid=50, amplitude=150)
 plot_series(time[:200], series[:200])
 
 series = autocorrelation(time, 10) + seasonality(time, peroid=50, amplitude=150) + trend(time, 2)
-series2 = autocorrelation(time, 10) + seasonality(time, peroid=50, amplitude=150) + trend(time, 2)
-plot_series(time[:200], series[:200])
+series2 = autocorrelation(time, 5) + seasonality(time, peroid=50, amplitude=2) + trend(time, -1) + 550
+series[200:] = series2[200:]
+plot_series(time[:300], series[:300])
 
