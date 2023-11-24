@@ -1,5 +1,6 @@
 import numpy as np
 import matplotlib.pyplot as plt
+import matplotlib.image as mpimg
 
 import tensorflow as tf
 from tensorflow import keras
@@ -125,3 +126,37 @@ plt.figure(figsize=(10, 6))
 plot_series(time_valid, x_valid)
 plot_series(time_valid, results)
 plt.show()
+
+print(keras.metrics.mean_absolute_error(x_valid, results).numpy())
+
+mae = history.history['mae']
+loss = history.history['loss']
+
+epochs = range(len(loss))
+
+plt.plot(epochs, mae, 'r')
+plt.plot(epochs, loss, 'b')
+plt.title('Mae and Loss')
+plt.xlabel("Epochs")
+plt.ylabel("Accuracy")
+plt.legend(["Mae", "Loss"])
+
+plt.figure()
+
+epochs_zoom = epochs[20:]
+mae_zoom = mae[20:]
+loss_zoom = loss[20:]
+
+plt.plot(epochs_zoom, mae_zoom, 'r')
+plt.plot(epochs_zoom, loss_zoom, 'b')
+plt.title('Mae and Loss')
+plt.xlabel("Epochs")
+plt.ylabel("Accuracy")
+plt.legend(["Mae", "Loss"])
+
+plt.figure()
+
+
+
+
+
