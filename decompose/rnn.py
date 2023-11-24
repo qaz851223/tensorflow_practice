@@ -114,6 +114,14 @@ model.compile(optimizer=optimizer, loss='Huber', metrics=['mae'])
 model.summary()
 history = model.fit(train_set, epochs=100)
 
+forecast = []
+for time in range(len(series) - window_size):
+    forecast.append(model.predict(series[time:time + window_size][np.newaxis]))
 
+forecast = forecast[split_time - window_size:]
+results = np.array(forecast)[:, 0, 0]
 
-
+plt.figure(figsize=(10, 6))
+plot_series(time_valid, x_valid)
+plot_series(time_valid, results)
+plt.show()
