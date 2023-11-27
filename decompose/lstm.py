@@ -44,10 +44,6 @@ series = baseline + trend(time, slope) + seasonality(time, peroid=365, amplitude
 # 有誤差的序列(noise)
 series += noise(time, noise_level, seed=42)
 
-plt.figure(figsize=(10, 6))
-plot_series(time, series)
-plt.show()
-
 # 劃分數據 train valid
 split_time = 1000
 time_train = time[:split_time]
@@ -59,7 +55,6 @@ window_size = 20
 batch_size = 32
 shuffle_buffer_size = 1000
 
-
 # --------------模擬生成數據集--------------
 # parameters :序列數據，窗口大小，批次大小，隨機緩存大小
 def windowed_dataset(series, window_size, batch_size, shuffle_buffer):
@@ -70,17 +65,18 @@ def windowed_dataset(series, window_size, batch_size, shuffle_buffer):
     dataset = dataset.batch(batch_size).prefetch(1)
     return dataset
 
-# --------------搭建SimppleRNN神經網路 使用LearningRateScheduler機制調整學習率--------------
+# --------------搭建LSTM神經網路 使用LearningRateScheduler機制調整學習率--------------
 # tf.keras.backend.clear_session()
 # tf.random.set_seed(51)
 # np.random.seed(51)
 
-# train_set = windowed_dataset(x_train, window_size, batch_size=128, shuffle_buffer=shuffle_buffer_size)
+# tf.keras.backend.clear_session()
+# dataset = windowed_dataset(x_train, window_size, batch_size, shuffle_buffer_size)
 
 # model = tf.keras.models.Sequential()
 # model.add(tf.keras.layers.Lambda(lambda x: tf.expand_dims(x, axis=-1), input_shape=[None]))
-# model.add(tf.keras.layers.SimpleRNN(40, return_sequences=True))
-# model.add(tf.keras.layers.SimpleRNN(40))
+# model.add(tf.keras.layers.Bidirectional(tf.keras.layers.LSTM(32, return_sequences=True)))
+# model.add(tf.keras.layers.Bidirectional(tf.keras.layers.LSTM(32)))
 # model.add(tf.keras.layers.Dense(1))
 # model.add(tf.keras.layers.Lambda(lambda x: x * 100.0))
 
@@ -88,32 +84,32 @@ def windowed_dataset(series, window_size, batch_size, shuffle_buffer):
 # optimizer = tf.keras.optimizers.SGD(learning_rate=1e-8, momentum=0.9) # SGD隨機梯度下降法
 # model.compile(optimizer=optimizer, loss='Huber', metrics=['mae'])
 # model.summary()
-# history = model.fit(train_set, epochs=100, callbacks=[lr_schedule])
+# history = model.fit(dataset, epochs=100, callbacks=[lr_schedule])
 
-# plt.semilogx(history.history["lr"], history.history["loss"])
-# plt.xlabel("lr")
-# plt.ylabel("loss")
+# plt.semilogx(history.history['lr'], history.history['loss']) # 取對數
 # plt.axis([1e-8, 1e-4, 0, 30])
-# plt.show()
+# plt.show() # 相較RNN，雙向LSTM的誤差曲線平滑許多
 
-# --------------搭建SimppleRNN神經網路 不調整學習率--------------
+
+# --------------搭建LSTM神經網路 不調整學習率--------------
 tf.keras.backend.clear_session()
 tf.random.set_seed(51)
 np.random.seed(51)
 
-train_set = windowed_dataset(x_train, window_size, batch_size=128, shuffle_buffer=shuffle_buffer_size)
+dataset = windowed_dataset(x_train, window_size, batch_size, shuffle_buffer_size)
 
 model = tf.keras.models.Sequential()
 model.add(tf.keras.layers.Lambda(lambda x: tf.expand_dims(x, axis=-1), input_shape=[None]))
-model.add(tf.keras.layers.SimpleRNN(40, return_sequences=True))
-model.add(tf.keras.layers.SimpleRNN(40))
+model.add(tf.keras.layers.Bidirectional(tf.keras.layers.LSTM(32, return_sequences=True)))
+# model.add(tf.keras.layers.Bidirectional(tf.keras.layers.LSTM(32, return_sequences=True))) #太多層有時效果不好
+model.add(tf.keras.layers.Bidirectional(tf.keras.layers.LSTM(32)))
 model.add(tf.keras.layers.Dense(1))
 model.add(tf.keras.layers.Lambda(lambda x: x * 100.0))
 
-optimizer = tf.keras.optimizers.SGD(learning_rate=5e-5, momentum=0.9) # SGD隨機梯度下降法
+optimizer = tf.keras.optimizers.SGD(learning_rate=1e-6, momentum=0.9) # SGD隨機梯度下降法
 model.compile(optimizer=optimizer, loss='Huber', metrics=['mae'])
 model.summary()
-history = model.fit(train_set, epochs=100)
+history = model.fit(dataset, epochs=100)
 
 forecast = []
 for time in range(len(series) - window_size):
@@ -131,7 +127,6 @@ print(keras.metrics.mean_absolute_error(x_valid, results).numpy())
 
 mae = history.history['mae']
 loss = history.history['loss']
-
 epochs = range(len(loss))
 
 plt.plot(epochs, mae, 'r')
@@ -140,8 +135,6 @@ plt.title('Mae and Loss')
 plt.xlabel("Epochs")
 plt.ylabel("Accuracy")
 plt.legend(["Mae", "Loss"])
-
-# plt.figure()
 plt.show()
 
 epochs_zoom = epochs[20:]
@@ -154,10 +147,4 @@ plt.title('Mae and Loss')
 plt.xlabel("Epochs")
 plt.ylabel("Accuracy")
 plt.legend(["Mae", "Loss"])
-
-# plt.figure()
 plt.show()
-
-
-
-
