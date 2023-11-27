@@ -53,9 +53,10 @@ model.fit(train_images, train_labels, epochs=10)
 test_loss, test_acc = model.evaluate(test_images, test_labels, verbose=2)
 print('\nTest accuracy:', test_acc)
 
-print(model.predict([[test_images]])[0])
-print(np.argmax(model.predict([[test_images]])[0]))
+
+probability_model = tf.keras.Sequential([model, tf.keras.layers.Softmax()])
+print(probability_model.predict([[test_images]])[0])
+print(np.argmax(probability_model.predict([[test_images]])[0]))
 print(test_images[0])
 plt.imshow(test_images[0])
 plt.show()
-
