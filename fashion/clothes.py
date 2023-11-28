@@ -64,7 +64,7 @@ plt.imshow(test_images[0])
 plt.show()
 
 # ---------保存模型---------
-model.save('fashion_model.h5')
+model.save(filepath='model/fashion_model.h5')
 
 config = model.to_json()
 print(config)
