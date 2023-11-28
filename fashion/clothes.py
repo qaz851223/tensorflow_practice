@@ -43,7 +43,7 @@ plt.show()
 model = tf.keras.Sequential()
 model.add(tf.keras.layers.Flatten(input_shape=(28, 28)))
 model.add(tf.keras.layers.Dense(128, activation='relu'))
-model.add(tf.keras.layers.Dense(10))
+model.add(tf.keras.layers.Dense(10, activation='softmax'))
 model.summary()
 
 # ---------訓練&評估模型---------
@@ -53,10 +53,18 @@ model.fit(train_images, train_labels, epochs=10)
 test_loss, test_acc = model.evaluate(test_images, test_labels, verbose=2)
 print('\nTest accuracy:', test_acc)
 
+prediction = model.predict(test_images)
+print(prediction.shape)
 
 probability_model = tf.keras.Sequential([model, tf.keras.layers.Softmax()])
-print(probability_model.predict([[test_images]])[0])
+
 print(np.argmax(probability_model.predict([[test_images]])[0]))
 print(test_images[0])
 plt.imshow(test_images[0])
 plt.show()
+
+# ---------保存模型---------
+model.save('fashion_model.h5')
+
+config = model.to_json()
+print(config)
