@@ -8,11 +8,11 @@ from tensorflow.keras.preprocessing.image import ImageDataGenerator
 
 
 
-TRAINING_CATS_DIR = 'practice/tmp/cats-and-dogs/training/cats'
-TRAINING_DOGS_DIR = 'practice/tmp/cats-and-dogs/training/dogs'
+TRAINING_CATS_DIR = 'tmp/cats-and-dogs/training/cats'
+TRAINING_DOGS_DIR = 'tmp/cats-and-dogs/training/dogs'
 
-VALIDATION_CATS_DIR = 'practice/tmp/cats-and-dogs/validation/cats'
-VALIDATION_DOGS_DIR = 'practice/tmp/cats-and-dogs/validation/dogs'
+VALIDATION_CATS_DIR = 'tmp/cats-and-dogs/validation/cats'
+VALIDATION_DOGS_DIR = 'tmp/cats-and-dogs/validation/dogs'
 
 # ---------------建構模型---------------
 model = tf.keras.Sequential()
@@ -30,8 +30,8 @@ model.compile(optimizer=RMSprop(learning_rate=0.001), loss='binary_crossentropy'
 
 
 
-TRAINING_DIR = 'practice/tmp/cats-and-dogs/training'
-VALIDATION_DIR = 'practice/tmp/cats-and-dogs/validation'
+TRAINING_DIR = 'tmp/cats-and-dogs/training'
+VALIDATION_DIR = 'tmp/cats-and-dogs/validation'
 train_datagen = ImageDataGenerator(rescale=1/255)
 validation_datagen = ImageDataGenerator(rescale=1/255)
 
