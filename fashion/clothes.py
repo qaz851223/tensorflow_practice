@@ -12,17 +12,17 @@ fashion_mnist = keras.datasets.fashion_mnist
 class_names = ['T-shirt/top', 'Trouser', 'Pullover', 'Dress', 'Coat',
                'Sandal', 'Shirt', 'Sneaker', 'Bag', 'Ankle boot']
 
-print(train_labels[:5])
-print(train_images.shape)
-print(len(train_labels))
-print(train_labels)
-print(test_images.shape)
-print(len(test_labels))
-plt.figure()
-plt.imshow(train_images[0])
-plt.colorbar()
-plt.grid(False)
-plt.show()
+# print(train_labels[:5])
+# print(train_images.shape)
+# print(len(train_labels))
+# print(train_labels)
+# print(test_images.shape)
+# print(len(test_labels))
+# plt.figure()
+# plt.imshow(train_images[0])
+# plt.colorbar()
+# plt.grid(False)
+# plt.show()
 
 # ---------預處理---------
 train_images = train_images / 255
@@ -57,7 +57,6 @@ prediction = model.predict(test_images)
 print(prediction.shape)
 
 probability_model = tf.keras.Sequential([model, tf.keras.layers.Softmax()])
-
 print(np.argmax(probability_model.predict([[test_images]])[0]))
 print(test_images[0])
 plt.imshow(test_images[0])
@@ -65,6 +64,19 @@ plt.show()
 
 # ---------保存模型---------
 model.save(filepath='model/fashion_model.h5')
-
+# ---------只保存網路架構---------
 config = model.to_json()
 print(config)
+with open('model/config.json', 'w') as json:
+    json.write(config)
+
+with open('model/config.json', 'r') as json:
+    json_config = json.read()
+
+model = keras.models.model_from_json(json_config)
+model.summary()
+# ---------權重參數---------
+weights = model.get_weights()
+print(weights)
+model.save_weights('model/weights.h5')
+model.load_weights('model/weights.h5')
