@@ -1,11 +1,15 @@
 import os
+import numpy as np
+import glob
+from PIL import Image
+import matplotlib.pyplot as plt
 
 import tensorflow as tf
 from tensorflow.keras import layers
 import tensorflow.keras
+import keras.backend as K
 from tensorflow.keras.optimizers import Adam
 from tensorflow.keras.preprocessing.image import ImageDataGenerator
-
 
 
 TRAINING_CATS_DIR = 'tmp/cats-and-dogs/training/cats'
@@ -26,10 +30,12 @@ model.add(tf.keras.layers.Flatten())
 model.add(tf.keras.layers.Dense(512, activation='relu'))
 model.add(tf.keras.layers.Dense(1, activation='sigmoid'))
 
-model.compile(optimizer=RMSprop(learning_rate=0.001), loss='binary_crossentropy', metrics=['acc'])
+model.compile(optimizer=Adam(learning_rate=0.001), loss='binary_crossentropy', metrics=['acc'])
 
-
-
+# ---------------預處理---------------
+# ImageDataGenerator
+# 利用現有的資料經過旋轉、翻轉、縮放…等方式增加更多的訓練資料
+# 宣告兩個數據生成器，指定範圍0~1
 TRAINING_DIR = 'tmp/cats-and-dogs/training'
 VALIDATION_DIR = 'tmp/cats-and-dogs/validation'
 train_datagen = ImageDataGenerator(rescale=1/255)
@@ -49,8 +55,16 @@ validation_generator = validation_datagen.flow_from_directory(
 
 history = model.fit(
     train_generator, 
-    step_per_epoch=224, 
+    steps_per_epoch=224, 
     epochs=20, 
     verbose=2, 
     validation_steps=25,
     validation_data=validation_generator)
+
+def print_result(path):
+    name_list = glob.glob(path)
+    fig = plt.figure(figsize=(12, 16))
+    for i in range(3):
+        img - Image.open(name_list[i])
+        sub_img = fig.add_subplot(131+i)
+        sub_img.imshow(img)
