@@ -5,3 +5,4 @@ __pycache__/
 # Distribution / packaging
 *.h5
 /model
+/img
