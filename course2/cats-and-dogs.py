@@ -39,7 +39,15 @@ model.compile(optimizer=Adam(learning_rate=0.001), loss='binary_crossentropy', m
 # 宣告兩個數據生成器，指定範圍0~1
 TRAINING_DIR = 'tmp/cats-and-dogs/training'
 VALIDATION_DIR = 'tmp/cats-and-dogs/validation'
-train_datagen = ImageDataGenerator(rescale=1/255)
+train_datagen = ImageDataGenerator(rescale=1/255, 
+                                    rotation_range=40,
+                                    width_shift_range=0.2, 
+                                    height_shift_range=0.2,
+                                    shear_range=0.2,
+                                    zoom_range=0.2,
+                                    horizontal_flip=True,
+                                    fill_mode='nearest')
+
 validation_datagen = ImageDataGenerator(rescale=1/255)
 
 train_generator = train_datagen.flow_from_directory(
@@ -56,7 +64,7 @@ validation_generator = validation_datagen.flow_from_directory(
 
 history = model.fit(
     train_generator, 
-    steps_per_epoch=224, 
+    steps_per_epoch=225, 
     epochs=10, 
     verbose=2, 
     validation_steps=25,
@@ -69,195 +77,28 @@ def print_result(path):
         img = Image.open(name_list[i])
         sub_img = fig.add_subplot(131+i)
         sub_img.imshow(img)
-    return
 
-# ========數據增強========
-img_path = 'tmp/img/horse/*'
-in_path = 'tmp/img/'
-out_path = 'tmp/img/output/'
-name_list = glob.glob(img_path)
-print_result(img_path)
+#-----------------------------------------------------------
+# Retrieve a list of list results on training and test data
+# sets for each training epoch
+#-----------------------------------------------------------
+acc=history.history['acc']
+val_acc=history.history['val_acc']
+loss=history.history['loss']
+val_loss=history.history['val_loss']
 
-# 調整大小
-if not os.path.exists(out_path + 'resize'):
-    os.makedirs(out_path + 'resize')
-datagen = image.ImageDataGenerator()
-gen_data = datagen.flow_from_directory(in_path, 
-                                       batch_size=1, 
-                                       shuffle=False, 
-                                       save_to_dir=out_path+'resize',
-                                       save_prefix='gen', 
-                                       target_size=(224, 224))
-for i in range(3):
-    gen_data.next()
-print_result(out_path + 'resize/*')
+epochs=range(len(acc)) # Get number of epochs
 
-# 角度旋轉
-if not os.path.exists(out_path + 'rotation_range'):
-    os.makedirs(out_path + 'rotation_range')
-datagen = image.ImageDataGenerator(rotation_range=45)
-gen = image.ImageDataGenerator()
-data = gen.flow_from_directory(in_path, batch_size = 1,
-                                class_mode=None, 
-                                shuffle=True, 
-                                target_size=(224,224))
-np_data = np.concatenate([data.next() for i in range(data.n)])
-datagen.fit(np_data)
-gen_data = datagen.flow_from_directory(in_path, 
-                                        batch_size=1, 
-                                        shuffle=False,
-                                        save_to_dir=out_path+'rotation_range',
-                                        save_prefix='gen', 
-                                        target_size=(224,224))
-for i in range(3):
-    gen_data.next()
-print_result(out_path + 'rotation_range/*')                                        
-
-# 平移變換
-if not os.path.exists(out_path + 'shift'):
-    os.makedirs(out_path + 'shift')
-datagen = image.ImageDataGenerator(width_shift_range=0.3, height_shift_range=0.3)
-gen = image.ImageDataGenerator()
-data = gen.flow_from_directory(in_path, batch_size = 1,
-                                class_mode=None, 
-                                shuffle=True, 
-                                target_size=(224,224))
-np_data = np.concatenate([data.next() for i in range(data.n)])
-datagen.fit(np_data)
-gen_data = datagen.flow_from_directory(in_path, 
-                                        batch_size=1, 
-                                        shuffle=False,
-                                        save_to_dir=out_path+'shift', 
-                                        save_prefix='gen', 
-                                        target_size=(224,224))
-for i in range(3):
-    gen_data.next()
-print_result(out_path + 'shift/*')
-
-# 縮放
-if not os.path.exists(out_path + 'zoom'):
-    os.makedirs(out_path + 'zoom')
-datagen = image.ImageDataGenerator(zoom_range=0.5)
-gen = image.ImageDataGenerator()
-data = gen.flow_from_directory(in_path, batch_size = 1,
-                                class_mode=None, 
-                                shuffle=True, 
-                                target_size=(224,224))
-np_data = np.concatenate([data.next() for i in range(data.n)])
-datagen.fit(np_data)
-gen_data = datagen.flow_from_directory(in_path, 
-                                        batch_size=1, 
-                                        shuffle=False,
-                                        save_to_dir=out_path+'zoom', 
-                                        save_prefix='gen', 
-                                        target_size=(224,224))
-for i in range(3):
-    gen_data.next()
-print_result(out_path + 'zoom/*')
-
-# channel_shift
-if not os.path.exists(out_path + 'channel'):
-    os.makedirs(out_path + 'channel')
-datagen = image.ImageDataGenerator(channel_shift_range=15) 
-gen = image.ImageDataGenerator()
-data = gen.flow_from_directory(in_path, batch_size = 1,
-                                class_mode=None, 
-                                shuffle=True, 
-                                target_size=(224,224))
-np_data = np.concatenate([data.next() for i in range(data.n)])
-datagen.fit(np_data)
-gen_data = datagen.flow_from_directory(in_path, 
-                                        batch_size=1, 
-                                        shuffle=False,
-                                        save_to_dir=out_path+'channel', 
-                                        save_prefix='gen', 
-                                        target_size=(224,224))
-for i in range(3):
-    gen_data.next()
-print_result(out_path + 'channel/*')
-
-# 翻轉
-if not os.path.exists(out_path + 'horizontal'):
-    os.makedirs(out_path + 'horizontal')
-datagen = image.ImageDataGenerator(horizontal_flip=True) 
-gen = image.ImageDataGenerator()
-data = gen.flow_from_directory(in_path, batch_size = 1,
-                                class_mode=None, 
-                                shuffle=True, 
-                                target_size=(224,224))
-np_data = np.concatenate([data.next() for i in range(data.n)])
-datagen.fit(np_data)
-gen_data = datagen.flow_from_directory(in_path, 
-                                        batch_size=1, 
-                                        shuffle=False,
-                                        save_to_dir=out_path+'horizontal', 
-                                        save_prefix='gen', 
-                                        target_size=(224,224))
-for i in range(3):
-    gen_data.next()
-print_result(out_path + 'horizontal/*')
-
-# rescale
-if not os.path.exists(out_path + 'rescale'):
-    os.makedirs(out_path + 'rescale')
-datagen = image.ImageDataGenerator(rescale=1/255) 
-gen = image.ImageDataGenerator()
-data = gen.flow_from_directory(in_path, batch_size = 1,
-                                class_mode=None, 
-                                shuffle=True, 
-                                target_size=(224,224))
-np_data = np.concatenate([data.next() for i in range(data.n)])
-datagen.fit(np_data)
-gen_data = datagen.flow_from_directory(in_path, 
-                                        batch_size=1, 
-                                        shuffle=False,
-                                        save_to_dir=out_path+'rescale', 
-                                        save_prefix='gen', 
-                                        target_size=(224,224))
-for i in range(3):
-    gen_data.next()
-print_result(out_path + 'rescale/*')
-
-# 填充方法
-# 有時旋轉 平移...等會有空隙
-# fill_mode => constant nearest reflect wrap
-if not os.path.exists(out_path + 'fill_mode'):
-    os.makedirs(out_path + 'fill_mode')
-datagen = image.ImageDataGenerator(fill_mode='wrap', zoom_range=[4,4]) 
-gen = image.ImageDataGenerator()
-data = gen.flow_from_directory(in_path, batch_size = 1,
-                                class_mode=None, 
-                                shuffle=True, 
-                                target_size=(224,224))
-np_data = np.concatenate([data.next() for i in range(data.n)])
-datagen.fit(np_data)
-gen_data = datagen.flow_from_directory(in_path, 
-                                        batch_size=1, 
-                                        shuffle=False,
-                                        save_to_dir=out_path+'fill_mode', 
-                                        save_prefix='gen', 
-                                        target_size=(224,224))
-for i in range(3):
-    gen_data.next()
-print_result(out_path + 'fill_mode/*')
-
-
-if not os.path.exists(out_path + 'nearest'):
-    os.makedirs(out_path + 'nearest')
-datagen = image.ImageDataGenerator(fill_mode='nearest', zoom_range=[4,4]) 
-gen = image.ImageDataGenerator()
-data = gen.flow_from_directory(in_path, batch_size = 1,
-                                class_mode=None, 
-                                shuffle=True, 
-                                target_size=(224,224))
-np_data = np.concatenate([data.next() for i in range(data.n)])
-datagen.fit(np_data)
-gen_data = datagen.flow_from_directory(in_path, 
-                                        batch_size=1, 
-                                        shuffle=False,
-                                        save_to_dir=out_path+'nearest', 
-                                        save_prefix='gen', 
-                                        target_size=(224,224))
-for i in range(3):
-    gen_data.next()
-print_result(out_path + 'nearest/*')
+#------------------------------------------------
+# Plot training and validation accuracy per epoch
+#------------------------------------------------
+plt.plot(epochs, acc, 'r', "Training Accuracy")
+plt.plot(epochs, val_acc, 'b', "Validation Accuracy")
+plt.title('Training and Validation accuracy')
+plt.show()
+#------------------------------------------------
+# Plot training and validation loss per epoch
+#------------------------------------------------
+plt.plot(epochs, loss, 'r', "Training Loss")
+plt.plot(epochs, val_loss, 'b', "Validation Loss")
+plt.show()
