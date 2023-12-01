@@ -6,3 +6,5 @@ __pycache__/
 *.h5
 /model
 /tmp/img
+/tmp/tfrecord
+*.tfrecord
