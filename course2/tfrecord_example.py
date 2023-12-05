@@ -7,6 +7,8 @@ import matplotlib.pyplot as plt
 import matplotlib.image as mpimg
 
 import tensorflow as tf
+from tensorflow.keras import layers
+import tensorflow.keras
 
 # ==========圖項數據處理實例==========
 image_labels = {
@@ -72,9 +74,51 @@ with tf.io.TFRecordWriter(recode_file) as writer:
 print("Wrote {} images to {}".format(counter, recode_file)) 
 
 # ==========加載tfrecord文件==========
-filenames = [recode_file]
+# filenames = [recode_file]
 # 讀取
-raw_dataset = tf.data.TFRecordDataset(filenames)
-print(raw_dataset)
+raw_train_dataset = tf.data.TFRecordDataset('images.tfrecord')
+print(raw_train_dataset)
 
+# 解析之前寫入的序列化string
+image_feature_description = {
+    'height': tf.io.FixedLenFeature([], tf.int64), 
+    'width': tf.io.FixedLenFeature([], tf.int64), 
+    'depth': tf.io.FixedLenFeature([], tf.int64), 
+    'label': tf.io.FixedLenFeature([], tf.int64), 
+    'image_raw': tf.io.FixedLenFeature([], tf.string)
+}
 
+# 解析 TFRecord 数据集中的单个样本
+def parse_tf_example(example_proto):
+    # 解析出來
+    parse_example = tf.io.parse_single_example(example_proto, image_feature_description)
+    # 預處理
+    x_train = tf.image.decode_jpeg(parse_example['image_raw'], channels=3)
+    x_train = tf.image.resize(x_train, (416, 416))
+    x_train /= 255.
+
+    label = parse_example['label']
+    y_train = label
+
+    return x_train, y_train
+
+# 透過map解析 應用於整個數據集，得到新的數據集train_dataset
+train_dataset = raw_train_dataset.map(parse_tf_example)
+print(train_dataset)
+
+# ==========製作訓練集==========
+num_epochs = 10
+train_ds = train_dataset.shuffle(buffer_size=10000).batch(2).repeat(num_epochs)
+print(train_ds)
+
+for batch, (x, y) in enumerate(train_ds):
+    print(batch, x.shape, y)
+
+model = tf.keras.Sequential()
+model.add(tf.keras.layers.Flatten())
+model.add(tf.keras.layers.Dense(2, activation='softmax'))
+
+model.compile(optimizer='adam', 
+                loss=tf.keras.losses.SparseCategoricalCrossentropy(),
+                metrics=['acc'])
+model.fit(train_ds, epochs=num_epochs)

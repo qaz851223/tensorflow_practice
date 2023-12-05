@@ -37,9 +37,9 @@ def serialize_example(feature0, feature1, feature2, feature3):
         'feature3': _float_feature(feature3)
     }
     # 使用tf.train.Example
-    example_protp = tf.train.Example(features=tf.train.Features(feature=feature))
+    example_proto = tf.train.Example(features=tf.train.Features(feature=feature))
     # SerializeToString方法轉換為二進制字符串
-    return example_protp.SerializeToString()
+    return example_proto.SerializeToString()
 
 n_observations = int(1e4)
 feature0 = np.random.choice([False, True], n_observations)
