@@ -8,3 +8,4 @@ __pycache__/
 /tmp/img
 /tmp/tfrecord
 *.tfrecord
+/tmp/text8.zip
