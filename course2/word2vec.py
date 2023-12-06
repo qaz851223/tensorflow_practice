@@ -7,13 +7,14 @@ import numpy as np
 
 import tensorflow as tf
 
+# 訓練參數
 learning_rate = 0.1
 batch_size = 128
 num_steps = 3000000
 display_step = 10000
 eval_step = 20000
 
-
+# 測試樣例
 eval_words = ['nine', 'of', 'going', 'american', 'britain']
 # word2vec 參數
 embedding_size = 200 # 詞向量維度
@@ -30,7 +31,7 @@ print(len(text_words))
 # 創建一個計數器，計算每個詞出現多少次
 count = [('UNK', -1)]
 # 基於詞頻返回max_vocabulary_size個常用詞
-count.extend(collections.Counter(text_words).most_common(max_vocabulary_size-1))
+count.extend(collections.Counter(text_words).most_common(max_vocabulary_size - 1))
 print(count[0:10])
 
 # 剔除出現少於min_occurrence次的詞
@@ -42,7 +43,10 @@ for i in range(len(count)-1, -1, -1):
         break
 
 # 詞ID映射
+# 計算語料庫大小
 vocabulary_size = len(count)
+print(vocabulary_size)
+# 每個詞都分配一個ID
 word2id = dict()
 for i, (word, _) in enumerate(count):
     word2id[word] = i
@@ -86,15 +90,15 @@ def next_batch(batch_size, num_skips, skip_window):
         context_words = [w for w in range(span) if w != skip_window] #上下文就是[0, 1, 2, 4, 5, 6]
         words_to_use = random.sample(context_words, num_skips) #在上下文裡隨機挑選2個候選詞
         for j, context_words in enumerate(words_to_use): #遍歷每一個候選詞，用其當作輸出友就是標籤
-            batch[i * num_skips + j] = buffer[skip_window] # 輸入都為當前窗口的中間詞，即3
-            labels[i * num_skips + j, 0] = buffer[context_words] #用當前候選詞當作標籤
+            batch[i * num_skips + j] = skip_window # 輸入都為當前窗口的中間詞，即3
+            labels[i * num_skips + j, 0] = context_words #用當前候選詞當作標籤
         if data_index == len(data):
             buffer.extend(data[0 : span])
             data_index = span
         else:
             buffer.append(data[0:span])
             data_index += 1
-    data_index = (data_index + len(data) - sapn) % len(data)
+    data_index = (data_index + len(data) - span) % len(data)
     return batch, labels
 
 with tf.device('/cpu:0'):
@@ -142,4 +146,25 @@ def run_optimization(x, y):
         # 更新
         optimizer.apply_gradients(zip(gradients, [embedding, nce_weights, nce_biases]))
 
+#  代測試的詞
+x_test = np.array([word2id[w.encode('utf-8')] for w in eval_words])
+# 訓練
+for step in range(1, num_steps + 1):
+    batch_x, batch_y = next_batch(batch_size, num_skips, skip_window)
+    run_optimization(batch_x, batch_y)
 
+    if step % display_step == 0 or step == 1:
+        loss = nce_loss(get_embedding(batch_x), batch_y)
+        print("step: %i, loss: %f" % (step, loss))
+
+    # Evaluation
+    if step % eval_step == 0 or step == 1:
+        print("Evaluation...")
+        sim = evaluate(get_embedding(x_test)).numpy()
+        for i in range(len(eval_words)):
+            top_k = 8
+            nearest = (-sim[i, :]).argsort()[1: top_k + 1]
+            log_str = '"%s" nearest neighbors:' % eval_words[i]
+            for k in range(top_k):
+                log_str = '%s %s,' % (log_str, id2word[nearest[k]])
+                print(log_str)
