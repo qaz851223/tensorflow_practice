@@ -8,7 +8,7 @@ import matplotlib.image as mpimg
 
 import tensorflow as tf
 from tensorflow.keras import layers
-import tensorflow.keras
+# import tensorflow.keras
 
 # ==========圖項數據處理實例==========
 image_labels = {
@@ -115,8 +115,8 @@ for batch, (x, y) in enumerate(train_ds):
     print(batch, x.shape, y)
 
 model = tf.keras.Sequential()
-model.add(tf.keras.layers.Flatten())
-model.add(tf.keras.layers.Dense(2, activation='softmax'))
+model.add(layers.Flatten())
+model.add(layers.Dense(2, activation='softmax'))
 
 model.compile(optimizer='adam', 
                 loss=tf.keras.losses.SparseCategoricalCrossentropy(),

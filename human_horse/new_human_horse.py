@@ -1,12 +1,10 @@
 import tensorflow as tf
-from tensorflow import keras
-from tensorflow.keras import models
-from keras.preprocessing import image
-from keras.utils import img_to_array, load_img
-from keras.preprocessing.image import ImageDataGenerator
-from keras.optimizers import RMSprop
-# from keras_tuner.tuners import Hyperband
-# from keras_tuner.engine.hyperparameters import HyperParameters
+import tensorflow.keras
+from tensorflow.keras import models, layers
+from tensorflow.keras.preprocessing.image import ImageDataGenerator, load_img, img_to_array
+from tensorflow.keras.optimizers import RMSprop
+from tensorflow.keras_tuner.tuners import Hyperband
+from tensorflow.keras_tuner.engine.hyperparameters import HyperParameters
 
 import os
 import random
@@ -51,20 +49,20 @@ fig.set_size_inches(ncols * 4, nrows * 4)
 
 
 # ---------------建構模型---------------
-model = keras.Sequential()
-model.add(keras.layers.Conv2D(16,(3, 3), activation='relu', input_shape=(300,300, 3)))
-model.add(keras.layers.MaxPool2D(2,2))
-model.add(keras.layers.Conv2D(32,(3, 3), activation='relu'))
-model.add(keras.layers.MaxPool2D(2,2))
-model.add(keras.layers.Conv2D(64,(3, 3), activation='relu'))
-model.add(keras.layers.MaxPool2D(2,2))
-model.add(keras.layers.Conv2D(64,(3, 3), activation='relu'))
-model.add(keras.layers.MaxPool2D(2,2))
-model.add(keras.layers.Conv2D(64,(3, 3), activation='relu'))
-model.add(keras.layers.MaxPool2D(2,2))
-model.add(keras.layers.Flatten())
-model.add(keras.layers.Dense(512, activation='relu'))
-model.add(keras.layers.Dense(1, activation='sigmoid'))
+model = tf.keras.Sequential()
+model.add(layers.Conv2D(16,(3, 3), activation='relu', input_shape=(300,300, 3)))
+model.add(layers.MaxPool2D(2,2))
+model.add(layers.Conv2D(32,(3, 3), activation='relu'))
+model.add(layers.MaxPool2D(2,2))
+model.add(layers.Conv2D(64,(3, 3), activation='relu'))
+model.add(layers.MaxPool2D(2,2))
+model.add(layers.Conv2D(64,(3, 3), activation='relu'))
+model.add(layers.MaxPool2D(2,2))
+model.add(layers.Conv2D(64,(3, 3), activation='relu'))
+model.add(layers.MaxPool2D(2,2))
+model.add(layers.Flatten())
+model.add(layers.Dense(512, activation='relu'))
+model.add(layers.Dense(1, activation='sigmoid'))
 
 model.compile(optimizer=RMSprop(learning_rate=0.001), loss='binary_crossentropy', metrics=['acc'])
 model.summary()

@@ -6,7 +6,7 @@ from sklearn import preprocessing
 
 import tensorflow as tf
 from tensorflow.keras import layers
-import tensorflow.keras
+
 
 features = pd.read_csv('tmp/temps.csv')
 print(features.head())

@@ -1,11 +1,11 @@
 import tensorflow as tf
-from tensorflow import keras
+import tensorflow.keras 
 import matplotlib.pyplot as plt
 import numpy as np
 
 
 # ---------資料下載---------
-fashion_mnist = keras.datasets.fashion_mnist
+fashion_mnist = tf.keras.datasets.fashion_mnist
 (train_images, train_labels),(test_images, test_labels) = fashion_mnist.load_data()
 
 # 數據及布包刮名稱類，之後繪製圖像時使用

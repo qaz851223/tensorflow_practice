@@ -1,21 +1,21 @@
 import tensorflow as tf
-from tensorflow import keras
+import tensorflow.keras
 import matplotlib.pyplot as plt
 
 # ---------資料下載---------
-fashion_mnist = keras.datasets.fashion_mnist
+fashion_mnist = tf.keras.datasets.fashion_mnist
 (train_images, train_labels),(test_images, test_labels) = fashion_mnist.load_data()
 
 
 # ---------建構模型---------
-model = keras.Sequential()
-model.add(keras.layers.Conv2D(64,(3, 3), activation='relu', input_shape=(28,28,1)))
-model.add(keras.layers.MaxPool2D(2,2))
-model.add(keras.layers.Conv2D(64,(3, 3), activation='relu'))
-model.add(keras.layers.MaxPool2D(2,2))
-model.add(keras.layers.Flatten())
-model.add(keras.layers.Dense(128, activation=tf.nn.relu))
-model.add(keras.layers.Dense(10, activation=tf.nn.softmax))
+model = tf.keras.Sequential()
+model.add(tf.keras.layers.Conv2D(64,(3, 3), activation='relu', input_shape=(28,28,1)))
+model.add(tf.keras.layers.MaxPool2D(2,2))
+model.add(tf.keras.layers.Conv2D(64,(3, 3), activation='relu'))
+model.add(tf.keras.layers.MaxPool2D(2,2))
+model.add(tf.keras.layers.Flatten())
+model.add(tf.keras.layers.Dense(128, activation=tf.nn.relu))
+model.add(tf.keras.layers.Dense(10, activation=tf.nn.softmax))
 model.summary()
 # 640 = (3*3+1)*64
 # 36928 = (3*3*64+1)*64

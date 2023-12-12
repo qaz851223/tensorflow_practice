@@ -1,15 +1,9 @@
-import os
-import numpy as np
 import glob
 from PIL import Image
 import matplotlib.pyplot as plt
 
 import tensorflow as tf
-from tensorflow.keras import layers
-import tensorflow.keras
-import keras.backend as K
 from tensorflow.keras.optimizers import Adam
-from tensorflow.keras.preprocessing import image
 from tensorflow.keras.preprocessing.image import ImageDataGenerator
 
 

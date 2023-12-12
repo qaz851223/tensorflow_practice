@@ -1,9 +1,9 @@
 import tensorflow as tf
-from tensorflow import keras
-from keras.preprocessing.image import ImageDataGenerator
-from keras.optimizers import RMSprop
-from keras_tuner.tuners import Hyperband
-from keras_tuner.engine.hyperparameters import HyperParameters
+import tensorflow.keras
+from tensorflow.keras.preprocessing.image import ImageDataGenerator
+from tensorflow.keras.optimizers import RMSprop
+from tensorflow.keras_tuner.tuners import Hyperband
+from tensorflow.keras_tuner.engine.hyperparameters import HyperParameters
 
 
 # class myCallback(tf.keras.callbacks.Callback):
@@ -35,15 +35,15 @@ validation_generator = validation_datagen.flow_from_directory(
 # 調參數
 hp = HyperParameters()
 def build_model(hp):
-    model = keras.Sequential()
-    model.add(keras.layers.Conv2D(hp.Choice('num_filters_layer0', values=[16, 64], default=16), (3, 3), activation='relu', input_shape=(300,300,3)))
-    model.add(keras.layers.MaxPool2D(2,2))
+    model = tf.keras.Sequential()
+    model.add(tf.keras.layers.Conv2D(hp.Choice('num_filters_layer0', values=[16, 64], default=16), (3, 3), activation='relu', input_shape=(300,300,3)))
+    model.add(tf.keras.layers.MaxPool2D(2,2))
     for i in range(hp.Int("num_conv_layers",1,3)):
-        model.add(keras.layers.Conv2D(hp.Choice(f'num_filters_layer{i}',values=[16, 64], default=16), (3, 3), activation='relu'))
-        model.add(keras.layers.MaxPool2D(2,2))  
-    model.add(keras.layers.Flatten())
-    model.add(keras.layers.Dense(hp.Int("hidden_units", 128, 512, step=32), activation='relu'))
-    model.add(keras.layers.Dense(1, activation='sigmoid'))
+        model.add(tf.keras.layers.Conv2D(hp.Choice(f'num_filters_layer{i}',values=[16, 64], default=16), (3, 3), activation='relu'))
+        model.add(tf.keras.layers.MaxPool2D(2,2))  
+    model.add(tf.keras.layers.Flatten())
+    model.add(tf.keras.layers.Dense(hp.Int("hidden_units", 128, 512, step=32), activation='relu'))
+    model.add(tf.keras.layers.Dense(1, activation='sigmoid'))
     model.compile(loss='binary_crossentropy', optimizer=RMSprop(learning_rate=0.001), metrics=['acc'])
     model.summary()
 

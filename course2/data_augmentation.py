@@ -1,4 +1,3 @@
-from tensorflow.keras.preprocessing import image
 from tensorflow.keras.preprocessing.image import ImageDataGenerator
 
 import os
@@ -26,7 +25,7 @@ print_result(img_path)
 # 調整大小
 if not os.path.exists(out_path + 'resize'):
     os.makedirs(out_path + 'resize')
-datagen = image.ImageDataGenerator()
+datagen = ImageDataGenerator()
 gen_data = datagen.flow_from_directory(in_path, 
                                        batch_size=1, 
                                        shuffle=False, 
@@ -40,8 +39,8 @@ print_result(out_path + 'resize/*')
 # 角度旋轉
 if not os.path.exists(out_path + 'rotation_range'):
     os.makedirs(out_path + 'rotation_range')
-datagen = image.ImageDataGenerator(rotation_range=45)
-gen = image.ImageDataGenerator()
+datagen = ImageDataGenerator(rotation_range=45)
+gen = ImageDataGenerator()
 data = gen.flow_from_directory(in_path, batch_size = 1,
                                 class_mode=None, 
                                 shuffle=True, 
@@ -61,8 +60,8 @@ print_result(out_path + 'rotation_range/*')
 # 平移變換
 if not os.path.exists(out_path + 'shift'):
     os.makedirs(out_path + 'shift')
-datagen = image.ImageDataGenerator(width_shift_range=0.3, height_shift_range=0.3)
-gen = image.ImageDataGenerator()
+datagen = ImageDataGenerator(width_shift_range=0.3, height_shift_range=0.3)
+gen = ImageDataGenerator()
 data = gen.flow_from_directory(in_path, batch_size = 1,
                                 class_mode=None, 
                                 shuffle=True, 
@@ -82,8 +81,8 @@ print_result(out_path + 'shift/*')
 # 縮放
 if not os.path.exists(out_path + 'zoom'):
     os.makedirs(out_path + 'zoom')
-datagen = image.ImageDataGenerator(zoom_range=0.5)
-gen = image.ImageDataGenerator()
+datagen = ImageDataGenerator(zoom_range=0.5)
+gen = ImageDataGenerator()
 data = gen.flow_from_directory(in_path, batch_size = 1,
                                 class_mode=None, 
                                 shuffle=True, 
@@ -103,8 +102,8 @@ print_result(out_path + 'zoom/*')
 # channel_shift
 if not os.path.exists(out_path + 'channel'):
     os.makedirs(out_path + 'channel')
-datagen = image.ImageDataGenerator(channel_shift_range=15) 
-gen = image.ImageDataGenerator()
+datagen = ImageDataGenerator(channel_shift_range=15) 
+gen = ImageDataGenerator()
 data = gen.flow_from_directory(in_path, batch_size = 1,
                                 class_mode=None, 
                                 shuffle=True, 
@@ -124,8 +123,8 @@ print_result(out_path + 'channel/*')
 # 翻轉
 if not os.path.exists(out_path + 'horizontal'):
     os.makedirs(out_path + 'horizontal')
-datagen = image.ImageDataGenerator(horizontal_flip=True) 
-gen = image.ImageDataGenerator()
+datagen = ImageDataGenerator(horizontal_flip=True) 
+gen = ImageDataGenerator()
 data = gen.flow_from_directory(in_path, batch_size = 1,
                                 class_mode=None, 
                                 shuffle=True, 
@@ -145,8 +144,8 @@ print_result(out_path + 'horizontal/*')
 # rescale
 if not os.path.exists(out_path + 'rescale'):
     os.makedirs(out_path + 'rescale')
-datagen = image.ImageDataGenerator(rescale=1/255) 
-gen = image.ImageDataGenerator()
+datagen = ImageDataGenerator(rescale=1/255) 
+gen = ImageDataGenerator()
 data = gen.flow_from_directory(in_path, batch_size = 1,
                                 class_mode=None, 
                                 shuffle=True, 
@@ -168,8 +167,8 @@ print_result(out_path + 'rescale/*')
 # fill_mode => constant nearest reflect wrap
 if not os.path.exists(out_path + 'fill_mode'):
     os.makedirs(out_path + 'fill_mode')
-datagen = image.ImageDataGenerator(fill_mode='wrap', zoom_range=[4,4]) 
-gen = image.ImageDataGenerator()
+datagen = ImageDataGenerator(fill_mode='wrap', zoom_range=[4,4]) 
+gen = ImageDataGenerator()
 data = gen.flow_from_directory(in_path, batch_size = 1,
                                 class_mode=None, 
                                 shuffle=True, 
@@ -189,8 +188,8 @@ print_result(out_path + 'fill_mode/*')
 
 if not os.path.exists(out_path + 'nearest'):
     os.makedirs(out_path + 'nearest')
-datagen = image.ImageDataGenerator(fill_mode='nearest', zoom_range=[4,4]) 
-gen = image.ImageDataGenerator()
+datagen = ImageDataGenerator(fill_mode='nearest', zoom_range=[4,4]) 
+gen = ImageDataGenerator()
 data = gen.flow_from_directory(in_path, batch_size = 1,
                                 class_mode=None, 
                                 shuffle=True, 

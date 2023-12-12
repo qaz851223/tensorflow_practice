@@ -1,5 +1,5 @@
 import tensorflow as tf
-from tensorflow import keras
+import tensorflow.keras
 import matplotlib.pyplot as plt
 import numpy as np
 
@@ -12,17 +12,17 @@ class myCallback(tf.keras.callbacks.Callback):
 callbacks = myCallback()
 
 # ---------資料下載---------
-fashion_mnist = keras.datasets.fashion_mnist
+fashion_mnist = tf.keras.datasets.fashion_mnist
 (train_images, train_labels),(test_images, test_labels) = fashion_mnist.load_data()
 
 
 # ---------建構模型---------
 train_images_scaled = train_images/255
 test_images_scaled = test_images/255
-model = keras.Sequential()
-model.add(keras.layers.Flatten(input_shape=(28, 28)))
-model.add(keras.layers.Dense(128, activation=tf.nn.relu))
-model.add(keras.layers.Dense(10, activation=tf.nn.softmax))
+model = tf.keras.Sequential()
+model.add(tf.keras.layers.Flatten(input_shape=(28, 28)))
+model.add(tf.keras.layers.Dense(128, activation=tf.nn.relu))
+model.add(tf.keras.layers.Dense(10, activation=tf.nn.softmax))
 
 # ---------訓練&評估模型---------
 

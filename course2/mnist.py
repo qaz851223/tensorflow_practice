@@ -1,9 +1,8 @@
 import gzip
 import pickle
-import numpy as np
 
 import tensorflow as tf
-import tensorflow.keras
+# import tensorflow.keras
 
 # read the file in read mode as binary 
 with gzip.open('tmp/mnist.pkl.gz', 'rb') as file_contents:

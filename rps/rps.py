@@ -6,8 +6,7 @@ import tkinter as tk
 from tkinter import filedialog
 
 import tensorflow as tf
-from tensorflow import keras
-from tensorflow.keras.preprocessing import image
+# import tensorflow.keras
 from tensorflow.keras.preprocessing.image import ImageDataGenerator, load_img, img_to_array
 
 rock_dir = os.path.join('tmp/Rock-Paper-Scissors/train/rock')

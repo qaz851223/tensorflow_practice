@@ -1,8 +1,5 @@
 import tensorflow as tf
-from tensorflow import keras
-from tensorflow.keras.preprocessing import image
-from tensorflow.keras.utils import img_to_array
-from tensorflow.keras.preprocessing.image import ImageDataGenerator
+from tensorflow.keras.preprocessing.image import ImageDataGenerator, img_to_array
 from tensorflow.keras.optimizers import RMSprop
 
 import os
@@ -82,7 +79,7 @@ plt.show()
 
 
 # ---------------predicting images---------------
-# D:\tf_practice\tmp\cats-v-dogs\testing\cats\105.jpg
+# D:\tensorflow_practice\tmp\cats-v-dogs\testing\cats\105.jpg
 file_path = input("Enter the file path: ")
 if os.path.exists(file_path):
     # 打开图像

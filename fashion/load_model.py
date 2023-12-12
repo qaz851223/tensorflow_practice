@@ -1,12 +1,12 @@
 import tensorflow as tf
-from tensorflow import keras
+import tensorflow.keras
 
 import matplotlib.pyplot as plt
 import numpy as np
 
-model = keras.models.load_model('model/fashion_model.h5')
+model = tf.keras.models.load_model('model/fashion_model.h5')
 
-fashion_mnist = keras.datasets.fashion_mnist
+fashion_mnist = tf.keras.datasets.fashion_mnist
 (train_images, train_labels),(test_images, test_labels) = fashion_mnist.load_data()
 
 class_names = ['T-shirt/top', 'Trouser', 'Pullover', 'Dress', 'Coat',
