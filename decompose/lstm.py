@@ -3,7 +3,6 @@ import matplotlib.pyplot as plt
 import matplotlib.image as mpimg
 
 import tensorflow as tf
-import tensorflow.keras
 
 
 # --------------模擬生成時間序列--------------
@@ -123,7 +122,7 @@ plot_series(time_valid, x_valid)
 plot_series(time_valid, results)
 plt.show()
 
-print(keras.metrics.mean_absolute_error(x_valid, results).numpy())
+print(tf.keras.metrics.mean_absolute_error(x_valid, results).numpy())
 
 mae = history.history['mae']
 loss = history.history['loss']

@@ -9,3 +9,4 @@ __pycache__/
 /tmp/tfrecord
 *.tfrecord
 /tmp/text8.zip
+*.tsv

@@ -72,6 +72,7 @@ model.fit(padded,
 
 
 # ---------------嵌入層可視化---------------
+# https://projector.tensorflow.org/
 e = model.layers[0]
 weights = e.get_weights()[0]
 print(weights.shape) # shape: (vocab_size, embedding_dim)

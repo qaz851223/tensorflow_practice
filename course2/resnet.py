@@ -1,16 +1,10 @@
-import os
-import numpy as np
-import glob
-from PIL import Image
 import matplotlib.pyplot as plt
 
 import tensorflow as tf
-# import tensorflow.keras
 from tensorflow.keras import layers, Model
 from tensorflow.keras.optimizers import Adam
 from tensorflow.keras.preprocessing.image import ImageDataGenerator
 from tensorflow.keras.applications.resnet import ResNet101
-# from keras.applications.inception_v3 import InceptionV3
 
 TRAINING_DIR = 'tmp/cats-and-dogs/training'
 VALIDATION_DIR = 'tmp/cats-and-dogs/validation'

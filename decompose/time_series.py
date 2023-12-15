@@ -70,8 +70,8 @@ plt.show()
 
 # 計算誤差
 tf.compat.v1.enable_eager_execution()
-print(keras.metrics.mean_squared_error(x_valid, naive_forecast).numpy())
-print(keras.metrics.mean_absolute_error(x_valid, naive_forecast).numpy())
+print(tf.keras.metrics.mean_squared_error(x_valid, naive_forecast).numpy())
+print(tf.keras.metrics.mean_absolute_error(x_valid, naive_forecast).numpy())
 
 # ------------移動平均法------------
 def moving_average_forecast(series, window_size): # window_size對前面n個時刻做平均
@@ -88,8 +88,8 @@ plot_series(time_valid, moving_avg)
 plt.show()
 
 # 計算誤差
-print(keras.metrics.mean_squared_error(x_valid, moving_avg).numpy())
-print(keras.metrics.mean_absolute_error(x_valid, moving_avg).numpy())
+print(tf.keras.metrics.mean_squared_error(x_valid, moving_avg).numpy())
+print(tf.keras.metrics.mean_absolute_error(x_valid, moving_avg).numpy())
 
 
 # ------------去除trend或seasonality------------(只剩下noise)
@@ -114,8 +114,8 @@ plot_series(time_valid, diff_moving_avg_plus_past)
 plt.show()
 
 # 計算誤差
-print(keras.metrics.mean_squared_error(x_valid, diff_moving_avg_plus_past).numpy())
-print(keras.metrics.mean_absolute_error(x_valid, diff_moving_avg_plus_past).numpy())
+print(tf.keras.metrics.mean_squared_error(x_valid, diff_moving_avg_plus_past).numpy())
+print(tf.keras.metrics.mean_absolute_error(x_valid, diff_moving_avg_plus_past).numpy())
 
 # ------------再加上去除noise------------
 diff_moving_avg_plus_smooth_past = moving_average_forecast(series[split_time - 370:-360], 10) + diff_moving_avg

@@ -1,3 +1,7 @@
+'''
+還沒寫好
+'''
+
 import tensorflow as tf
 import tensorflow.keras
 from tensorflow.keras.preprocessing.image import ImageDataGenerator

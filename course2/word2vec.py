@@ -1,7 +1,5 @@
 import collections
-import os
 import random
-import urllib
 import zipfile
 import numpy as np
 

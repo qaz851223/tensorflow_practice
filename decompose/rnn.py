@@ -3,7 +3,6 @@ import matplotlib.pyplot as plt
 import matplotlib.image as mpimg
 
 import tensorflow as tf
-import tensorflow.keras
 
 
 # --------------模擬生成時間序列--------------
