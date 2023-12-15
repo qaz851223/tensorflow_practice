@@ -73,7 +73,7 @@ with open('model/config.json', 'w') as json:
 with open('model/config.json', 'r') as json:
     json_config = json.read()
 
-model = keras.models.model_from_json(json_config)
+model = tf.keras.models.model_from_json(json_config)
 model.summary()
 # ---------權重參數---------
 weights = model.get_weights()
