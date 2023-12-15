@@ -50,14 +50,14 @@ print(training_images.shape)
 print(testing_images.shape)
 
 # ---------------建構模型---------------
-model = keras.Sequential()
-model.add(keras.layers.Conv2D(64,(3, 3), activation='relu', input_shape=(28,28,1)))
-model.add(keras.layers.MaxPool2D(2,2))
-model.add(keras.layers.Conv2D(64,(3, 3), activation='relu'))
-model.add(keras.layers.MaxPool2D(2,2))
-model.add(keras.layers.Flatten())
-model.add(keras.layers.Dense(128, activation='relu'))
-model.add(keras.layers.Dense(26, activation='softmax'))
+model = tf.keras.Sequential()
+model.add(tf.keras.layers.Conv2D(64,(3, 3), activation='relu', input_shape=(28,28,1)))
+model.add(tf.keras.layers.MaxPool2D(2,2))
+model.add(tf.keras.layers.Conv2D(64,(3, 3), activation='relu'))
+model.add(tf.keras.layers.MaxPool2D(2,2))
+model.add(tf.keras.layers.Flatten())
+model.add(tf.keras.layers.Dense(128, activation='relu'))
+model.add(tf.keras.layers.Dense(26, activation='softmax'))
 model.summary()
 
 model.compile(optimizer=tf.optimizers.Adam(),
