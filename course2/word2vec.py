@@ -5,6 +5,8 @@ import numpy as np
 
 import tensorflow as tf
 
+# https://www.kaggle.com/datasets/gupta24789/text8-word-embedding?select=text8
+
 # 訓練參數
 learning_rate = 0.1
 batch_size = 128
