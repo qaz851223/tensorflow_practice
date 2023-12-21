@@ -1,6 +1,6 @@
 # Tensorflow 練習
-參考課程連結
-(https://www.bilibili.com/video/BV1rz4y117p1?p=1&vd_source=32bf45c0ce711c6b1692fb70dc8e313f/ "(强推)TensorFlow官方入门实操课程")
+參考課程連結  
+[(强推)TensorFlow官方入门实操课程](https://www.bilibili.com/video/BV1rz4y117p1?p=1&vd_source=32bf45c0ce711c6b1692fb70dc8e313f)
 ## Lesson 1 beginning
 + fashion
     * begin.py         一個神經元網路
