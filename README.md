@@ -9,9 +9,23 @@
     * load_model.py    使用訓練好的模型
     * stop_train.py    自動終止訓練
     * cnn.py           卷積神經網路
-  
 ## Lesson 2 Human and Hourse
 + human_horse
     * human_horse.py (save模型停不下來 還不知道是什麼問題)
     * new_human_horse.py 
-
+## Lesson 3 cats and dogs
++ cats_dogs
+    * classification.py 分類圖片(tmp/PetImages 已分類好)
+    * cats_dogs.py
+## Lesson 4 手寫字體辨識案例
++  write
+    * write.py
+## Lesson 5 剪刀石頭布案例
++ rps
+    * rps.py
+## Lesson 6 自然語言文本處理
++ IMDB
+    * words.py    詞條化&序列化
+    * sarcasm.py  諷刺數據集的詞條化&序列化
+    * sarcasm2.py  
+    * movie.py
