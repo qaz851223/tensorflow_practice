@@ -2,6 +2,7 @@ import tensorflow as tf
 import tensorflow.keras 
 import matplotlib.pyplot as plt
 import numpy as np
+import os
 
 
 # ---------資料下載---------
@@ -63,6 +64,9 @@ plt.imshow(test_images[0])
 plt.show()
 
 # ---------保存模型---------
+model_path = 'model'
+if not os.path.exists(model_path):
+    os.makedirs(model_path)
 model.save(filepath='model/fashion_model.h5')
 # ---------只保存網路架構---------
 config = model.to_json()
