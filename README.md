@@ -44,7 +44,7 @@ ex 可用來預測股票、天氣等等
     + season.py       時間序列
     + time_series.py  時間序列的預測方法
     + rnn_prac.py     RNN樣本的生成
-    + rnn.py          RNN時間序列預測
+    + rnn.py          RNN時間序列預測  
     時間序列生成->切分數據集->生成RNN輸入樣本->定義SimpleRNN神經網路->定義參數->訓練->查看誤差曲線->定義改進後的RNN網路->使用RNN網路模型預測時間序列->評估訓練結果
     + lstm.py         雙向LSTM時間序列預測
 ## Lesson 9 Course2
