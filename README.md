@@ -28,7 +28,7 @@
     * words.py    詞條化&序列化
     * sarcasm.py  諷刺數據集的詞條化&序列化
     * movie.py    可視化IMDB分類
-    * sarcasm2.py 子詞對分類器的影響(採用不完整子詞訓練->很難學習正確的語意和情感)
+    * sarcasm2.py 子詞對分類器的影響(採用不完整子詞訓練->很難學習正確的語意和情感)  
     [imdb_reviews/subwords8k版本](https://github.com/tensorflow/datasets/blob/master/docs/catalog/imdb_reviews.md#imdb_reviewssubwords8k)
     (下載後模型在 C:\Users\christy.hsieh\tensorflow_datasets)  
 可視化網站  
@@ -48,3 +48,23 @@ ex 可用來預測股票、天氣等等
     時間序列生成->切分數據集->生成RNN輸入樣本->定義SimpleRNN神經網路->定義參數->訓練->查看誤差曲線->定義改進後的RNN網路->使用RNN網路模型預測時間序列->評估訓練結果
     + lstm.py         雙向LSTM時間序列預測
 ## Lesson 9 Course2
++ course2
+    * temp.py 氣溫預測
+    * mnist.py 神經網路分類任務
+    * cats-and-dogs.py 貓狗辨識
+    * data_augmentation.py 數據增強
+    * resnet.py 遷移學習  
+    (input_shape可至下方連結查看)  
+    [Tensorflow API](https://www.tensorflow.org/api_docs/python/tf/keras/applications)  
+    * tfrecord.py (TFRecord使用)
+    * tfrecord_example.py  
+    [官方練習](https://www.tensorflow.org/tutorials/load_data/tfrecord?hl=zh-cn#%E6%BC%94%E7%BB%83%EF%BC%9A%E8%AF%BB%E5%8F%96%E5%92%8C%E5%86%99%E5%85%A5%E5%9B%BE%E5%83%8F%E6%95%B0%E6%8D%AE)  
+    * word2vec.py 建構詞向量模型
+## Lesson 10 projects
++ projects
+    * house.py 預測房價  
+    https://ithelp.ithome.com.tw/articles/10320643  
+    * flower.py 鳶尾花分類  
+    https://ithelp.ithome.com.tw/articles/10321099  
+    * diseases.py  
+    https://ithelp.ithome.com.tw/articles/10321499
