@@ -66,5 +66,5 @@ ex 可用來預測股票、天氣等等
     https://ithelp.ithome.com.tw/articles/10320643  
     * flower.py 鳶尾花分類  
     https://ithelp.ithome.com.tw/articles/10321099  
-    * diseases.py  
+    * diseases.py 分析心血管疾病之發生率  
     https://ithelp.ithome.com.tw/articles/10321499
